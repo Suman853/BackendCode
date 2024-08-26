@@ -89,13 +89,8 @@ app.delete("/delete-Employee/:EmployeeID", async (req, res) => {
     const result = await sql.query`
       DELETE FROM Employee
       WHERE EmployeeID = ${req.params.EmployeeID}`;
-
-    // Check if the deletion was successful
-    if (result.rowsAffected[0] > 0) {
       res.status(200).json({ message: "Employee deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Employee not found" });
-    }
+    
   } catch (error) {
     // Handle any errors
     res.status(500).json({ message: "An error occurred", error });
