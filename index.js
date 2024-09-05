@@ -48,10 +48,10 @@ app.get("/", (request, response) => {
 
 
  // Insert data into your database
-app.post("/add-Employee", async (req, res) => {
+app.post("/add-Book", async (req, res) => {
   // Insert data into your database
   const result =
-    await sql.query`INSERT INTO Employee (EmployeeID, FirstName, LastName, City) VALUES (${req.body.EmployeeID}, ${req.body.FirstName}, ${req.body.LastName}, ${req.body.City})`;
+    await sql.query`INSERT INTO Employee (BookID, BookName, AuthorName, BookType) VALUES (${req.body.BookID}, ${req.body.BookName}, ${req.body.AuthorName}, ${req.body.BookType})`;
  
   // Send a response back to the client
   res.status(200).json({ message: "Data inserted successfully", result });
@@ -59,21 +59,21 @@ app.post("/add-Employee", async (req, res) => {
 
 //Edit data into your data base 
 
-app.put("/edit-Employee/:EmployeeID", async (req, res) => {
+app.put("/edit-Book/:BookID", async (req, res) => {
   try {
     // Update data in your database
     const result = await sql.query`
       UPDATE Employee
-      SET FirstName = ${req.body.FirstName}, 
-          LastName = ${req.body.LastName}, 
-          City = ${req.body.City}
-      WHERE EmployeeID = ${req.params.EmployeeID}`;
+      SET BookName = ${req.body.BookName}, 
+          AuthorName = ${req.body.AuthorName}, 
+          BookType = ${req.body.BookType}
+      WHERE BookID = ${req.params.BookID}`;
 
     // Check if the update was successful
     if (result.rowsAffected[0] > 0) {
       res.status(200).json({ message: "Data updated successfully", result });
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({ message: "Book not found" });
     }
   } catch (error) {
     // Handle any errors
@@ -83,13 +83,13 @@ app.put("/edit-Employee/:EmployeeID", async (req, res) => {
 });
 
 //Delete Data in your database 
-app.delete("/delete-Employee/:EmployeeID", async (req, res) => {
+app.delete("/delete-Book/:BookID", async (req, res) => {
   try {
     // Delete the employee from your database
     const result = await sql.query`
       DELETE FROM Employee
-      WHERE EmployeeID = ${req.params.EmployeeID}`;
-      res.status(200).json({ message: "Employee deleted successfully" });
+      WHERE BookID = ${req.params.BookID}`;
+      res.status(200).json({ message: "Book deleted successfully" });
     
   } catch (error) {
     // Handle any errors
